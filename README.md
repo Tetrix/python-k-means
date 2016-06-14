@@ -1,1 +1,1 @@
-# python-k-means
+This is a python implementation of k-means algorythm
