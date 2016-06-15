@@ -11,9 +11,9 @@ def parse_csv_to_list(filename):
     full_list = []
 
     with open(filename, 'r') as csvfile:
-    	csv_reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    	for row in csv_reader:
-    		full_list.append(row)
+        csv_reader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+        for row in csv_reader:
+            full_list.append(row)
     return full_list
 
 full_list=parse_csv_to_list(filename)
@@ -25,6 +25,7 @@ def num_of_lists(full_list):
     return number_of_lists
 
 number_of_lists=num_of_lists(full_list)
+
 
 #Puts columns in a list column_lists. column_lists is a list that contains list for every column
 def list_of_columns(number_of_lists,full_list):
@@ -38,6 +39,7 @@ def list_of_columns(number_of_lists,full_list):
     return column_lists
 
 column_lists=list_of_columns(number_of_lists, full_list)
+
 
 #Returns the minimum of every columns
 def minimum_lists(number_of_lists, column_lists):
@@ -53,18 +55,26 @@ def maximum_lists(number_of_lists, column_lists):
         max_list.append(max(column_lists[i]))
     return max_list        
 
+#The first centrioms
 c1=minimum_lists(number_of_lists,column_lists)
 c2=maximum_lists(number_of_lists,column_lists)
 
 
-def form_clusters(column_lists,c1,c2):
+# def euclid_distance(clusters, centriom):
+#     distance_array=[]
+#     for i in range(0, len(full_list)):
+#         distance_array.append(math.sqrt(pow(((clusters[0])[i] - centriom[0]),2) + pow(((clusters[1])[i] - centriom[1]),2)))
+    #return distance_array
 
+#print(euclid_distance(column_lists,c1))
+#print(euclid_distance(column_lists,c2))
+
+def form_clusters(column_lists,c1,c2):
     cluster=[]
     cluster1=[]
     cluster2=[]
     
     for i in range(0, len(full_list)):
-
 
         euclid1 = math.sqrt(pow(((column_lists[0])[i] - c1[0]),2) + pow(((column_lists[1])[i] - c1[1]),2))
         euclid2 = math.sqrt(pow(((column_lists[0])[i] - c2[0]),2) + pow(((column_lists[1])[i] - c2[1]),2))
@@ -75,13 +85,15 @@ def form_clusters(column_lists,c1,c2):
             cluster2.append(full_list[i])
 
     cluster.append(cluster1)
-    cluster.append(cluster2)        
+    cluster.append(cluster2)
+
     return cluster
 
 
 
 cluster1=form_clusters(column_lists,c1,c2)[0]
 cluster2=form_clusters(column_lists,c1,c2)[1]
+
 
 
 def average(cluster):
@@ -92,14 +104,20 @@ def average(cluster):
     new_centriom.append((sum(cluster_columns[1])/cluster_length))
     return new_centriom
 
-#print(average(cluster1))
 
+#new centrioms
 cluster1_1=average(cluster1)
 cluster2_2=average(cluster2)
 
-#print(form_clusters(column_lists,cluster1_1,cluster2_2)[0])
+
+temp_cluster=[]
+for i in range(0, number_of_lists):
+    temp_cluster.append(form_clusters(column_lists,cluster1_1,cluster2_2)[i])
 
 
-
-
-
+#Checks if there is a change in clusters. If no changes are detected the algorythm ends.
+def compare_clusters(cluster1, cluster2):
+    for val in cluster1:
+        if val in cluster2:
+            return True
+    return False
