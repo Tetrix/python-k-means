@@ -8,6 +8,7 @@ This is a python implementation of k-means algorithm
 Technologies used:
 
 -python
+
 -python internal libraries (numpy,csv,math,os)
 
 
