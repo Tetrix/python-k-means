@@ -100,7 +100,7 @@ for test_suite in os.listdir('data'):
     c2=max(full_list)
 
 
-    clusters=form_clusters(c1,c2,cluster,clster1,cluster2)
+    clusters=form_clusters(c1,c2,cluster,cluster1,cluster2)
     nm_clusters=0
 
     for cluster in clusters:
